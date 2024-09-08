@@ -1,13 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract PalestineDonationToken is ERC20, Ownable {
     address public palestineAddress;  // Address to receive donation commissions
-    uint256 public transactionCommission = 2;  // 2% commission in Ether
+    uint256 public transactionCommission = 2;  // 2% commission in tokens
 
     // List of beneficiaries
     mapping(address => bool) public beneficiaries;
@@ -41,26 +40,18 @@ contract PalestineDonationToken is ERC20, Ownable {
         }
     }
 
-    // Override transfer to include commission in Ether
+    // Override transfer to include a token commission
     function transfer(address recipient, uint256 amount) public override returns (bool) {
-        // Take Ether commission and send it to Palestine address
-        uint256 commissionInEther = getEtherCommission(); // Calculate the commission in Ether
-        require(msg.sender.balance >= commissionInEther, "Not enough Ether to cover the commission");
+        uint256 commissionAmount = (amount * transactionCommission) / 100;
+        uint256 amountAfterCommission = amount - commissionAmount;
 
-        // Transfer the Ether commission to Palestine address
-        (bool success, ) = palestineAddress.call{value: commissionInEther}("");
-        require(success, "Ether commission transfer failed");
+        // Transfer commission to Palestine address
+        _transfer(msg.sender, palestineAddress, commissionAmount);
 
-        // Proceed with token transfer
-        _transfer(msg.sender, recipient, amount);
+        // Transfer remaining tokens to the recipient
+        _transfer(msg.sender, recipient, amountAfterCommission);
 
         return true;
-    }
-
-    // Function to calculate Ether commission (custom logic to determine amount)
-    function getEtherCommission() internal pure returns (uint256) {
-        // For example, set a fixed Ether commission (this can be dynamic based on your requirements)
-        return 0.001 ether;  // This is just an example, can be changed
     }
 
     // Allow the user to donate Ether directly, and all of it is sent to Palestine
