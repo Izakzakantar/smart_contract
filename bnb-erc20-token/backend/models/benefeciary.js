@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db');  // Import the Sequelize instance
+const sequelize = require('../config/db');
+const User = require('./user');  // Importing the Users model for foreign key reference
 
 const Beneficiary = sequelize.define('Beneficiary', {
   beneficiary_id: {
@@ -18,9 +19,20 @@ const Beneficiary = sequelize.define('Beneficiary', {
   phone: {
     type: DataTypes.STRING(15),
   },
+  user_id: {
+    type: DataTypes.UUID,
+    references: {
+      model: User,  // References the Users model
+      key: 'user_id',
+    },
+    onDelete: 'CASCADE',  // Automatically deletes beneficiary if the associated user is deleted
+  }
 }, {
   tableName: 'Beneficiaries',
-  timestamps: false,  // Disable createdAt and updatedAt fields
+  timestamps: false,  // Disable timestamps
 });
+
+User.hasMany(Beneficiary, { foreignKey: 'user_id', onDelete: 'CASCADE' });
+Beneficiary.belongsTo(User, { foreignKey: 'user_id' });
 
 module.exports = Beneficiary;

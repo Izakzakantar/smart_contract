@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db');
+const sequelize = require('../config/db');  // Assuming Sequelize instance is configured
 
 const SmartContract = sequelize.define('SmartContract', {
   contract_id: {
@@ -10,18 +10,19 @@ const SmartContract = sequelize.define('SmartContract', {
   contract_address: {
     type: DataTypes.STRING(255),
     allowNull: false,
-    unique: true,
+    unique: true,  // Ensures the contract address is unique
   },
   deployment_date: {
     type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
+    defaultValue: DataTypes.NOW,  // Automatically set the current date and time
   },
   description: {
     type: DataTypes.STRING(255),
-  },
+    allowNull: true,  // Optional description field
+  }
 }, {
   tableName: 'SmartContracts',
-  timestamps: false,
+  timestamps: false,  // Disable automatic timestamps (createdAt, updatedAt)
 });
 
 module.exports = SmartContract;

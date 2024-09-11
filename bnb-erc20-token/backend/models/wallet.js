@@ -1,31 +1,44 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db');
-const User = require('./user');
+const sequelize = require('../config/db');  // Assuming Sequelize instance is configured
+const User = require('./user');  // Importing the Users model for foreign key reference
 
 const Wallet = sequelize.define('Wallet', {
-  address: {
-    type: DataTypes.STRING(255),
+  wallet_id: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
-    allowNull: false,
   },
   balance: {
     type: DataTypes.FLOAT,
     allowNull: false,
   },
+  address: {
+    type: DataTypes.STRING(255),
+    allowNull: false,
+  },
   user_id: {
     type: DataTypes.UUID,
     references: {
-      model: 'Users',
+      model: User, // References the Users model
       key: 'user_id',
     },
-    onDelete: 'CASCADE',
+    onDelete: 'CASCADE',  // If a user is deleted, their wallets are deleted
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
+    onUpdate: DataTypes.NOW,
   },
 }, {
   tableName: 'Wallets',
-  timestamps: true,
+  timestamps: true,  // Automatically handles createdAt and updatedAt
 });
 
-User.hasMany(Wallet, { foreignKey: 'user_id' });// A user can have multiple wallets
-Wallet.belongsTo(User, { foreignKey: 'user_id' }); // A wallet belongs to a user
+User.hasMany(Wallet, { foreignKey: 'user_id', onDelete: 'CASCADE' });
+Wallet.belongsTo(User, { foreignKey: 'user_id' });
 
 module.exports = Wallet;

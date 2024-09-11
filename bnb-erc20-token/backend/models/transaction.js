@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
-const Wallet = require('./wallet');
-const Donation = require('./donation');
+const Wallet = require('./wallet');  // Importing the Wallet model for foreign key reference
+const Donation = require('./donation');  // Importing the Donation model for foreign key reference
 
 const Transaction = sequelize.define('Transaction', {
   transaction_id: {
@@ -24,28 +24,29 @@ const Transaction = sequelize.define('Transaction', {
   wallet_id: {
     type: DataTypes.UUID,
     references: {
-      model: 'Wallets',
-      key: 'address',
+      model: Wallet,  // References the Wallets model
+      key: 'wallet_id',
     },
-    onDelete: 'CASCADE',
+    onDelete: 'CASCADE',  // Automatically deletes transaction if the wallet is deleted
   },
   donation_id: {
     type: DataTypes.UUID,
     references: {
-      model: 'Donations',
+      model: Donation,  // References the Donations model
       key: 'donation_id',
     },
-    onDelete: 'CASCADE',
-  },
+    onDelete: 'CASCADE',  // Automatically deletes transaction if the donation is deleted
+  }
 }, {
   tableName: 'Transactions',
-  timestamps: false,
+  timestamps: false,  // Disable automatic timestamps
 });
 
-Wallet.hasMany(Transaction, { foreignKey: 'wallet_id' });
+// Define associations
+Wallet.hasMany(Transaction, { foreignKey: 'wallet_id', onDelete: 'CASCADE' });
 Transaction.belongsTo(Wallet, { foreignKey: 'wallet_id' });
 
-Donation.hasMany(Transaction, { foreignKey: 'donation_id' });
+Donation.hasMany(Transaction, { foreignKey: 'donation_id', onDelete: 'CASCADE' });
 Transaction.belongsTo(Donation, { foreignKey: 'donation_id' });
 
 module.exports = Transaction;

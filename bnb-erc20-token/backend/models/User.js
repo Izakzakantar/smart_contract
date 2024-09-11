@@ -1,12 +1,11 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db');  
+const sequelize = require('../config/db');  // Assuming Sequelize instance is configured
 
-// Define the model for the 'Users' table
 const User = sequelize.define('User', {
   user_id: {
-    type: DataTypes.CHAR(36),  
-    defaultValue: DataTypes.UUIDV4,  
-    primaryKey: true, 
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true,
   },
   name: {
     type: DataTypes.STRING(50),
@@ -15,22 +14,32 @@ const User = sequelize.define('User', {
   email: {
     type: DataTypes.STRING(100),
     allowNull: false,
-    unique: true,  
+    unique: true,
   },
   password: {
     type: DataTypes.STRING(255),
     allowNull: false,
   },
   phone: {
-    type: DataTypes.STRING(15),  
+    type: DataTypes.STRING(15),
+    allowNull: true,
   },
-  userType: {
-    type: DataTypes.ENUM('Donor', 'Beneficiary'),  
+  user_type: {
+    type: DataTypes.ENUM('Donor', 'Beneficiary'),
     allowNull: false,
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
+    onUpdate: DataTypes.NOW,
   }
 }, {
-  tableName: 'Users',  
-  timestamps: true,  
+  tableName: 'Users',
+  timestamps: true,  // This automatically creates and updates `createdAt` and `updatedAt`
 });
 
 module.exports = User;
