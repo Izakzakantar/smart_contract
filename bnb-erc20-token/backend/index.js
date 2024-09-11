@@ -1,7 +1,10 @@
 const connection=require('./config/connect');
 const sequelize=require('./config/db');
+const valid=require('./middlewares/validation');
+const createUser=require('./controllers/userController')
 const express=require('express');
 const app=express();
+app.use(express.json());
 async function dbConnect(){
     try {
         await connection.dbConnection();
