@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');  // Assuming Sequelize instance is configured
-const User = require('./user');  // Importing the Users model for foreign key reference
+const User = require('../models/User');  // Importing the Users model for foreign key reference
 
 const Wallet = sequelize.define('Wallet', {
   wallet_id: {

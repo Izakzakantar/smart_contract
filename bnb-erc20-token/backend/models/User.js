@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db');  // Assuming Sequelize instance is configured
+const sequelize = require('../config/db');
 
 const User = sequelize.define('User', {
   user_id: {
@@ -35,11 +35,10 @@ const User = sequelize.define('User', {
   updatedAt: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
-    onUpdate: DataTypes.NOW,
-  }
+  },
 }, {
   tableName: 'Users',
-  timestamps: true,  // This automatically creates and updates `createdAt` and `updatedAt`
+  timestamps: true,
 });
 
 module.exports = User;
