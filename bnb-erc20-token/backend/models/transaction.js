@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
-const Wallet = require('./wallet');  
+const Wallet = require('./wallet');  // Importing the Wallet model for foreign key reference
 const Donation = require('./donation');  // Importing the Donation model
 const SmartContract = require('./smartcontract');  // Importing the SmartContract model
 

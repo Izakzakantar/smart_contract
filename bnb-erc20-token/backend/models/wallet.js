@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../config/db'); 
+const sequelize = require('../config/db');  // Assuming Sequelize instance is configured
 const User = require('../models/User');  // Importing the Users model for foreign key reference
 const SmartContract = require('../models/SmartContract');  // Importing SmartContract model
 

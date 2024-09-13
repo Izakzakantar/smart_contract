@@ -32,14 +32,7 @@ const Donation = sequelize.define('Donation', {
     },
     onDelete: 'CASCADE',  // Automatically deletes donation if the donor is deleted
   },
-  beneficiary_id: {
-    type: DataTypes.UUID,
-    references: {
-      model: Beneficiary,  // References the Beneficiaries model
-      key: 'beneficiary_id',
-    },
-    onDelete: 'CASCADE',  // Automatically deletes donation if the beneficiary is deleted
-  }
+  
 }, {
   tableName: 'Donations',
   timestamps: false,  // Disable automatic timestamps
@@ -48,8 +41,4 @@ const Donation = sequelize.define('Donation', {
 // Define associations
 Donor.hasMany(Donation, { foreignKey: 'donor_id', onDelete: 'CASCADE' });
 Donation.belongsTo(Donor, { foreignKey: 'donor_id' });
-
-Beneficiary.hasMany(Donation, { foreignKey: 'beneficiary_id', onDelete: 'CASCADE' });
-Donation.belongsTo(Beneficiary, { foreignKey: 'beneficiary_id' });
-
 module.exports = Donation;
