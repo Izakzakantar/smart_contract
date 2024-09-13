@@ -38,7 +38,7 @@ const Transaction = sequelize.define('Transaction', {
     onDelete: 'CASCADE',  // Automatically deletes transaction if the donation is deleted
   }
 }, {
-  tableName: 'Transactions',
+  tableName: 'Transactions',//points to Transactions table
   timestamps: false,  // Disable automatic timestamps
 });
 
