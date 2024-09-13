@@ -1,11 +1,8 @@
 const validator=require('validator');
- function registerValidation(req,res){
+ function registerValidation(req,res,next){
     const {name,email,password,phone,user_type}=req.body;
     if (!validator.isLength(name, { min: 10, max: 50 })) {
         return res.status(400).json({ message: "Name must be between 10 and 50 characters." });
-    }
-    if(!validator.isAlpha(name.replace(/\s/g, ''))){
-        return res.status(400).json({ message: "Name must only contain letters and spaces" });
     }
     const obj={
         name:name,
@@ -44,6 +41,6 @@ const validator=require('validator');
         return res.status(400).json({message:"Please choose Donor or Beneficiary"});
     }
     //--------------------------------------------------------------------------
-    next();
+    next()
 }
-module.exports=registerValidation;
+module.exports={registerValidation};

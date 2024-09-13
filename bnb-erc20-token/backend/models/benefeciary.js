@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
-const User = require('./user');  // Importing the Users model for foreign key reference
+const User = require('..models/user');  // Importing the Users model for foreign key reference
 
 const Beneficiary = sequelize.define('Beneficiary', {
   beneficiary_id: {

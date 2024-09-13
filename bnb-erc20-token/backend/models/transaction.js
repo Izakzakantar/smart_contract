@@ -1,7 +1,8 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
-const Wallet = require('./wallet');  // Importing the Wallet model for foreign key reference
-const Donation = require('./donation');  // Importing the Donation model for foreign key reference
+const Wallet = require('./wallet');  
+const Donation = require('./donation');  // Importing the Donation model
+const SmartContract = require('./smartcontract');  // Importing the SmartContract model
 
 const Transaction = sequelize.define('Transaction', {
   transaction_id: {
@@ -36,9 +37,17 @@ const Transaction = sequelize.define('Transaction', {
       key: 'donation_id',
     },
     onDelete: 'CASCADE',  // Automatically deletes transaction if the donation is deleted
-  }
+  },
+  smartcontract_id: {
+    type: DataTypes.UUID,
+    references: {
+      model: SmartContract,  // References the SmartContracts model
+      key: 'contract_id',
+    },
+    onDelete: 'CASCADE',  // Automatically deletes transaction if the smart contract is deleted
+  },
 }, {
-  tableName: 'Transactions',
+  tableName: 'Transactions',  // Points to Transactions table
   timestamps: false,  // Disable automatic timestamps
 });
 
@@ -48,5 +57,8 @@ Transaction.belongsTo(Wallet, { foreignKey: 'wallet_id' });
 
 Donation.hasMany(Transaction, { foreignKey: 'donation_id', onDelete: 'CASCADE' });
 Transaction.belongsTo(Donation, { foreignKey: 'donation_id' });
+
+SmartContract.hasMany(Transaction, { foreignKey: 'smartcontract_id', onDelete: 'CASCADE' });
+Transaction.belongsTo(SmartContract, { foreignKey: 'smartcontract_id' });
 
 module.exports = Transaction;
