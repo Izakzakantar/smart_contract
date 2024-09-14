@@ -16,6 +16,7 @@ const Wallet = sequelize.define('Wallet', {
   address: {
     type: DataTypes.STRING(255),
     allowNull: false,
+    unique:true,
   },
   user_id: {
     type: DataTypes.UUID,

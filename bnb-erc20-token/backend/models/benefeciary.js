@@ -18,6 +18,8 @@ const Beneficiary = sequelize.define('Beneficiary', {
   },
   phone: {
     type: DataTypes.STRING(15),
+    allowNull:false,
+    unique:true
   },
   user_id: {
     type: DataTypes.UUID,

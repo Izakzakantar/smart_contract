@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 const Wallet = require('./wallet');  // Importing the Wallet model for foreign key reference
-const Donation = require('./donation');  // Importing the Donation model
+const Beneficiary = require('./beneficiary');  // Importing the Beneficiary model
 const SmartContract = require('./smartcontract');  // Importing the SmartContract model
 
 const Transaction = sequelize.define('Transaction', {
@@ -28,15 +28,15 @@ const Transaction = sequelize.define('Transaction', {
       model: Wallet,  // References the Wallets model
       key: 'wallet_id',
     },
-    onDelete: 'CASCADE',  // Automatically deletes transaction if the wallet is deleted
+    onDelete: 'CASCADE',
   },
-  donation_id: {
+  beneficiary_id: {
     type: DataTypes.UUID,
     references: {
-      model: Donation,  // References the Donations model
-      key: 'donation_id',
+      model: Beneficiary,  // References the Beneficiaries model
+      key: 'beneficiary_id',
     },
-    onDelete: 'CASCADE',  // Automatically deletes transaction if the donation is deleted
+    onDelete: 'CASCADE',
   },
   smartcontract_id: {
     type: DataTypes.UUID,
@@ -44,19 +44,19 @@ const Transaction = sequelize.define('Transaction', {
       model: SmartContract,  // References the SmartContracts model
       key: 'contract_id',
     },
-    onDelete: 'CASCADE',  // Automatically deletes transaction if the smart contract is deleted
+    onDelete: 'CASCADE',
   },
 }, {
-  tableName: 'Transactions',  // Points to Transactions table
-  timestamps: false,  // Disable automatic timestamps
+  tableName: 'Transactions',
+  timestamps: false,
 });
 
 // Define associations
 Wallet.hasMany(Transaction, { foreignKey: 'wallet_id', onDelete: 'CASCADE' });
 Transaction.belongsTo(Wallet, { foreignKey: 'wallet_id' });
 
-Donation.hasMany(Transaction, { foreignKey: 'donation_id', onDelete: 'CASCADE' });
-Transaction.belongsTo(Donation, { foreignKey: 'donation_id' });
+Beneficiary.hasMany(Transaction, { foreignKey: 'beneficiary_id', onDelete: 'CASCADE' });
+Transaction.belongsTo(Beneficiary, { foreignKey: 'beneficiary_id' });
 
 SmartContract.hasMany(Transaction, { foreignKey: 'smartcontract_id', onDelete: 'CASCADE' });
 Transaction.belongsTo(SmartContract, { foreignKey: 'smartcontract_id' });

@@ -12,12 +12,12 @@ CREATE TABLE Users (
 CREATE TABLE Wallets (
   wallet_id CHAR(36) PRIMARY KEY DEFAULT (UUID()),  
   balance FLOAT NOT NULL,                           
-  address VARCHAR(255) NOT NULL,                    
+  address VARCHAR(255) UNIQUE NOT NULL,                    
   user_id CHAR(36),                                 
   smartcontract_id CHAR(36),
   createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  
   updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  
-  CONSTRAINT fk_user1 FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE,
+  CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE,
   CONSTRAINT fk_contract FOREIGN KEY (smartcontract_id) REFERENCES SmartContracts(contract_id)
 );
 
@@ -32,10 +32,10 @@ CREATE TABLE Donors (
 CREATE TABLE Beneficiaries (
   beneficiary_id CHAR(36) PRIMARY KEY DEFAULT (UUID()),  
   first_name VARCHAR(100) NOT NULL,                      
-  address VARCHAR(255) NOT NULL,                         
+  address VARCHAR(255) UNIQUE NOT NULL,                         
   phone VARCHAR(15),
   user_id CHAR(36),
-  CONSTRAINT fk_user2 FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
+  CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Donations (
@@ -54,12 +54,13 @@ CREATE TABLE Transactions (
   transaction_type ENUM('Send', 'Receive') NOT NULL,    
   amount FLOAT NOT NULL,                                 
   wallet_id CHAR(36),                                    
-  donation_id CHAR(36),   
+  beneficiary_id CHAR(36),   
   smartcontract_id CHAR(36),
   CONSTRAINT fk_wallet FOREIGN KEY (wallet_id) REFERENCES Wallets(wallet_id) ON DELETE CASCADE,
-  CONSTRAINT fk_donation FOREIGN KEY (donation_id) REFERENCES Donations(donation_id) ON DELETE CASCADE,
+  CONSTRAINT fk_beneficiary FOREIGN KEY (beneficiary_id) REFERENCES Beneficiaries(beneficiary_id) ON DELETE CASCADE,
   CONSTRAINT fk_contract2 FOREIGN KEY (smartcontract_id) REFERENCES SmartContracts(contract_id)
 );
+
 
 CREATE TABLE Receipts (
   receipt_id CHAR(36) PRIMARY KEY DEFAULT (UUID()),       

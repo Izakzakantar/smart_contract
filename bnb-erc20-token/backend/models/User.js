@@ -22,9 +22,10 @@ const User = sequelize.define('User', {
   },
   phoneNumber: {
     type: DataTypes.STRING(15),
-    allowNull: true,
+    allowNull: false,
+    unique:true
   },
-  user_type: {
+  userType: {
     type: DataTypes.ENUM('Donor', 'Beneficiary'),
     allowNull: false,
   },
