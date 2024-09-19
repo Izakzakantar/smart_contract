@@ -1,5 +1,5 @@
 const validator=require('validator');
- function registerValidation(req,res,next){
+function registerValidation(req,res,next){
     const {name,email,password,phone,user_type}=req.body;
     if (!validator.isLength(name, { min: 10, max: 50 })) {
         return res.status(400).json({ message: "Name must be between 10 and 50 characters." });
@@ -43,4 +43,5 @@ const validator=require('validator');
     //--------------------------------------------------------------------------
     next()
 }
+
 module.exports={registerValidation};

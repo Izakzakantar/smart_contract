@@ -7,6 +7,7 @@ const app=express();
 app.use(express.json());
 app.use(limit)
 app.use(userRouter);
+
 async function dbConnect(){
     try {
         await connection.dbConnection();
@@ -21,3 +22,4 @@ async function dbConnect(){
     }
 }
 dbConnect()
+
