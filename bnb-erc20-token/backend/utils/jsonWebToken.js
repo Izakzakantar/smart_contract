@@ -5,4 +5,7 @@ async function createToken(user_id){
         expiresIn:"1h"
     })
 }
-module.exports={createToken};
+async function verify(token){
+    return await jwt.verify(token,config.jwt_key);
+}
+module.exports={createToken,verify};
