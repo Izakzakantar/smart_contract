@@ -51,7 +51,7 @@ CREATE TABLE Donations (
 CREATE TABLE Transactions (
   transaction_id CHAR(36) PRIMARY KEY DEFAULT (UUID()),  
   transaction_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
-  transaction_type ENUM('Send', 'Receive') NOT NULL,    
+  transaction_type ENUM('Buy', 'Transfer') NOT NULL,    
   amount FLOAT NOT NULL,                                 
   wallet_id CHAR(36),                                    
   beneficiary_id CHAR(36),   
@@ -74,3 +74,17 @@ CREATE TABLE SmartContracts (
   deployment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
   description VARCHAR(255)                            
 );
+CREATE TABLE DonationReceiver (
+    receiver_id CHAR(36) PRIMARY KEY,   -- Primary key (receiver_id)
+    
+    donation_id CHAR(36),               -- Foreign key referencing Donations table
+    donation_time TIMESTAMP,            -- Timestamp for when the donation was made
+    donor_address VARCHAR(255),         -- Donor's address
+    amount FLOAT,                       -- Amount of the donation
+    donor_id CHAR(36),                  -- Foreign key referencing Donors table
+    
+    -- Foreign key constraints
+    FOREIGN KEY (donation_id) REFERENCES Donations(donation_id) ON DELETE CASCADE,
+    FOREIGN KEY (donor_id) REFERENCES Donors(donor_id) ON DELETE CASCADE
+);
+

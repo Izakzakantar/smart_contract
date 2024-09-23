@@ -15,7 +15,7 @@ const Transaction = sequelize.define('Transaction', {
     defaultValue: DataTypes.NOW,
   },
   transaction_type: {
-    type: DataTypes.ENUM('Send', 'Receive'),
+    type: DataTypes.ENUM('Buy', 'Transfer'),
     allowNull: false,
   },
   amount: {
@@ -51,7 +51,6 @@ const Transaction = sequelize.define('Transaction', {
   timestamps: false,
 });
 
-// Define associations
 Wallet.hasMany(Transaction, { foreignKey: 'wallet_id', onDelete: 'CASCADE' });
 Transaction.belongsTo(Wallet, { foreignKey: 'wallet_id' });
 
