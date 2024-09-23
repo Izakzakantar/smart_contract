@@ -13,10 +13,7 @@ const Donation = sequelize.define('Donation', {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,
   },
-  donation_type: {
-    type: DataTypes.STRING(50),
-    allowNull: false,
-  },
+  
   amount: {
     type: DataTypes.FLOAT,
     allowNull: false,

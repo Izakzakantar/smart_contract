@@ -41,7 +41,6 @@ CREATE TABLE Beneficiaries (
 CREATE TABLE Donations (
   donation_id CHAR(36) PRIMARY KEY DEFAULT (UUID()),    
   date_of_donation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  donation_type VARCHAR(50) NOT NULL,                  
   amount FLOAT NOT NULL,                                
   remark VARCHAR(255),                                  
   donor_id CHAR(36),                                    
