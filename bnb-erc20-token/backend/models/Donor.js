@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
-const User = require('../models/User');
+const User = require('../models/user');
 
 const Donor = sequelize.define('Donor', {
   donor_id: {
@@ -11,11 +11,6 @@ const Donor = sequelize.define('Donor', {
   first_name: {
     type: DataTypes.STRING(100),
     allowNull: false,
-  },
-  email: {
-    type: DataTypes.STRING(100),
-    allowNull: false,
-    unique: true,
   },
   user_id: {
     type: DataTypes.UUID,

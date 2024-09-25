@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Wallet=require('../models/wallet');
 const bcrypt = require('bcrypt');
 const jwt=require('../utils/jsonWebToken');
 const { use } = require('../routes/userRoutes');
@@ -30,10 +31,16 @@ async function registration(...args) {
         return { status: 'error', message: 'An internal server error occurred.' };
     }
 }
-async function displayUserInformation(user_id){
+async function displayUserInformation(userId){
     try {
-        const query=await User.findByPk(user_id);
-        return query.toJSON();
+        
+        const [user_info,wallet_info]=await Promise.all([
+            User.findByPk(userId),
+            Wallet.findOne({ where: { user_id: userId } })
+
+        ])
+        const dashabord={user_info,wallet_info};
+        return dashabord;
     } catch (error) {
         return { status: 'error', message: 'An internal server error occurred.' }; 
     }
@@ -58,5 +65,7 @@ async function login(email,password){
         return {status:"error",message:"An internal server error occurred."}
     }
 }
-//displayUserInformation("a9fb23df-1138-40bd-8285-269d56156fbd")
+console.log(displayUserInformation("27cc5009-e2cb-4aff-a798-1abca8b3dcce").then((result)=>{
+    console.log(result);
+}));
 module.exports = { registration,displayUserInformation ,login};

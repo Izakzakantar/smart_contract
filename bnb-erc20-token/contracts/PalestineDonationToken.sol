@@ -45,10 +45,8 @@ contract PalestineDonationToken is ERC20, Ownable {
         uint256 commissionAmount = (amount * transactionCommission) / 100;
         uint256 amountAfterCommission = amount - commissionAmount;
 
-        // Transfer commission to Palestine address
         _transfer(msg.sender, palestineAddress, commissionAmount);
 
-        // Transfer remaining tokens to the recipient
         _transfer(msg.sender, recipient, amountAfterCommission);
 
         return true;

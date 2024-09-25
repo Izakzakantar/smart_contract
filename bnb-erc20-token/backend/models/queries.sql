@@ -24,7 +24,7 @@ CREATE TABLE Wallets (
 CREATE TABLE Donors (
   donor_id CHAR(36) PRIMARY KEY DEFAULT (UUID()),  
   first_name VARCHAR(100) NOT NULL,               
-  email VARCHAR(100) NOT NULL UNIQUE,
+  
   user_id CHAR(36),  
   CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
 );

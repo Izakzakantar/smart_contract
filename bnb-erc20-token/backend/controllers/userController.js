@@ -1,5 +1,6 @@
 const userFunctions = require('../middlewares/crud');
-
+const jwt=require('../utils/jsonWebToken');
+const config=require("../../config.json")
 async function createUser(req, res) {
     try {
         const { name, email, password, phone, user_type } = req.body;
@@ -15,12 +16,25 @@ async function createUser(req, res) {
 }
 async function userDashboard(req,res){
     try {
-        const user_id=req.params.id;
-        const user=await userFunctions.displayUserInformation(user_id);
-        if(!user){
-            res.status(404).json({message:'User not found'});
+        const userid=req.params.id;
+        //preventing IDOR vulnerablity 
+        //------------------------------------------------------------------------
+        const token = req.cookies.token || req.headers.authorization.split(" ")[1];
+        if(!token){
+            res.status(404).json({message:"Unauthorized"});
         }
-        res.status(200).json(user)
+        else{
+            const decodedToken=jwt.verify(token,config.jwt_key);
+            if(!decodedToken.usedId===userid){
+                res.status(404).json({message:"Unauthorized"});
+            }
+        }
+        //-----------------------------------------------------------------------
+            const user=await userFunctions.displayUserInformation(userid);
+            if(!user){
+                res.status(404).json({message:'User not found'});
+            }
+            res.status(200).json(user)
     } catch (error) {
         res.status(500).json({ message: 'An internal server error occurred.' });
     }

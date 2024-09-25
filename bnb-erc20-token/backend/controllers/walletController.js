@@ -11,11 +11,11 @@ async function createWallet(req, res) {
     }
     let decoded;
     try {
-      decoded = await jwt.verify(token, config.jwt_key);  
+      decoded = await jwt.verify(token);  
     } catch (err) {
       return res.status(401).json({ message: "Unauthorized: Invalid or expired token" });
     }
-    const result = await walletfunctions.createWallet(balance, address, decoded.user_id, smartcontract_id);
+    const result = await walletfunctions.createWallet(balance, address, decoded.userId, smartcontract_id);
     //console.log(result);
     res.status(200).json({ message: "Wallet has been created successfully!" });
   } catch (error) {
