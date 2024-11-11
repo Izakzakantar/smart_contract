@@ -22,9 +22,7 @@
 │   │   ├── CryptoCard      # Card for displaying individual crypto info
 │   │   │   ├── CryptoCard.js
 │   │   │   └── CryptoCard.css
-│   │   └── SignUpButton    # Reusable Sign Up / Get Started button component
-│   │       ├── SignUpButton.js
-│   │       └── SignUpButton.css
+│   │   
 │   │
 │   ├── /pages              # Components for different pages in the app
 │   │   ├── BuySell.js      # Buy/Sell page component
