@@ -1,0 +1,52 @@
+/my-react-app               # Root project folder
+├── /public                 # Public folder for static assets
+│   ├── index.html          # HTML template with root div
+│   ├── favicon.ico         # Favicon for the app
+│   └── manifest.json       # Manifest for PWA support
+│
+├── /src                    # Source folder for all application code
+│   ├── index.js            # Entry point, renders the App component
+│   ├── App.js              # Main app component, sets up layout and routing
+│   ├── App.css             # Global styles for the App
+│   │
+│   ├── /components         # Reusable components for the landing page
+│   │   ├── Header          # Header component with logo and navigation links
+│   │   │   ├── Header.js
+│   │   │   └── Header.css
+│   │   ├── HeroSection     # Hero section component for the main tagline
+│   │   │   ├── HeroSection.js
+│   │   │   └── HeroSection.css
+│   │   ├── MarketTrend     # Market trend section component
+│   │   │   ├── MarketTrend.js
+│   │   │   └── MarketTrend.css
+│   │   ├── CryptoCard      # Card for displaying individual crypto info
+│   │   │   ├── CryptoCard.js
+│   │   │   └── CryptoCard.css
+│   │   └── SignUpButton    # Reusable Sign Up / Get Started button component
+│   │       ├── SignUpButton.js
+│   │       └── SignUpButton.css
+│   │
+│   ├── /pages              # Components for different pages in the app
+│   │   ├── BuySell.js      # Buy/Sell page component
+│   │   ├── Grow.js         # Grow page component
+│   │   ├── Markets.js      # Markets page component
+│   │   ├── Donate.js       # Donate page component
+│   │   ├── Support.js      # Support page component
+│   │   ├── SignIn.js       # Sign In page component
+│   │   └── SignUp.js       # Sign Up page component
+│   │
+│   ├── /assets             # Assets folder for images, icons, and fonts
+│   │   ├── logo.png        # Logo image for the Header component
+│   │   ├── icons           # Folder for various icons (e.g., BTC, ETH)
+│   │   └── flags           # Folder for flag images (if needed)
+│   │
+│   ├── /styles             # Global styles, variables, and themes
+│   │   ├── variables.css   # CSS variables for colors, fonts, etc.
+│   │   └── index.css       # Additional global styles (optional)
+│   │
+│   └── /hooks              # Custom hooks for reusable logic (if needed)
+│       ├── useAuth.js      # Example custom hook for authentication
+│       └── useFetch.js     # Example custom hook for data fetching
+│
+├── package.json            # Project dependencies and scripts
+└── README.md               # Project documentation
