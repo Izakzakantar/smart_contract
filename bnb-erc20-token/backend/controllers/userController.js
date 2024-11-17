@@ -4,11 +4,18 @@ const config=require("../../config.json")
 async function createUser(req, res) {
     try {
         const { name, email, password, phone, user_type } = req.body;
+        //console.log(req);
         const result = await userFunctions.registration(name, email, password, phone, user_type);
 
         if (result.status === 'error') {
             return res.status(400).json(result); 
         }
+        const token=await jwt.createToken(result.user_id);
+        res.cookie("user_token",token,{
+            httpOnly:true,
+            maxAge:3600000
+
+        })
         res.status(200).json({ message: `successful registration: ${JSON.stringify(result, null, 2)}` });
     } catch (err) {
         res.status(500).json({ message: 'An internal server error occurred.' });

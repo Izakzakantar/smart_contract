@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css';
-
+import Signup from '../sign_up/sign_Up';
 function Header() {
   return (
     <header className="header">
@@ -10,7 +10,7 @@ function Header() {
 
       <div className="logo">
         <Link to="/">
-          <img src="/path-to-logo.png" alt="Logo" />
+        <img style={{width: '100%', height: '100%'}} src="" />
         </Link>
       </div>
       
@@ -24,7 +24,7 @@ function Header() {
       
       <div className="auth-buttons">
         <Link to="/sign-in" className="sign-in">Sign In</Link>
-        <Link to="/sign-up" className='sign-up'>Sign Up</Link>
+        <Link to="/signup" className='sign-up'>Sign up</Link>
       </div>
       
       {/* drapeau droit */}
