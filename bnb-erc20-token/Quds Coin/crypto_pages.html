@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Buy/Sell</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
+        rel="stylesheet">
+    <link rel="icon" href="assets/images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="./dist/css/main.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+        .navbar {
+            background: #111;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .nav-list {
+            display: flex;
+            gap: 20px;
+        }
+
+        .navbar .nav-item {
+            list-style: none;
+        }
+
+        .navbar .nav-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .navbar .nav-link:hover {
+            color: #18c8ff;
+        }
+
+        .header+main {
+            margin-top: 60px;
+        }
+
+        .action-selector {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .action-selector label {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .action-selector select {
+            margin-bottom: 20px;
+            padding: 10px 15px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 2px solid #933ffe;
+            background: transparent;
+            color: white;
+        }
+
+        .action-selector select option[value="buy"] {
+            background-color: green;
+            color: white;
+        }
+
+        .action-selector select option[value="sell"] {
+            background-color: red;
+            color: white;
+        }
+
+        .crypto-input {
+            margin-bottom: 20px;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .crypto-input .input-control {
+            margin-bottom: 15px;
+            width: 100%;
+            max-width: 300px;
+            padding: 10px;
+            border-radius: 10px;
+            border: 2px solid #933ffe;
+            background: transparent;
+            color: white;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .crypto-input .input-control::placeholder {
+            color: #aaa;
+            font-style: italic;
+        }
+
+        .crypto-input p {
+            margin-top: 10px;
+        }
+
+        .crypto-input .btn {
+            position: relative;
+            display: inline-block;
+            padding: 12px 24px;
+            font-size: 16px;
+            color: white;
+            border: none;
+            background: linear-gradient(145deg, #18c8ff, #933ffe);
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .crypto-input .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        .tradingview-chart {
+            margin-top: 40px;
+        }
+
+        #tradingview_chart {
+            height: 400px;
+            width: 100%;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px 0;
+            background: #111;
+            color: #aaa;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-wrapper bg-dark">
+        <!-- Header -->
+        <header class="header">
+            <div class="navbar">
+                <a href="#" class="navbar-brand flex items-center">
+                    <img src="./assets/icons/site_icon.svg">
+                    <span class="brand-text">Crypto</span>
+                </a>
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="donation.html" class="nav-link">Donation</a></li>
+                    <li class="nav-item"><a href="buy_sell.html" class="nav-link">Market</a></li>
+                    <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                    <li class="nav-item"><a href="about.html" class="nav-link">Support</a></li>
+                </ul>
+            </div>
+        </header>
+
+        <!-- Buy/Sell Page -->
+        <main>
+            <section id="buy-sell" class="page-sc-buy-sell flex items-center">
+                <div class="container">
+                    <div class="buy-sell-content text-center">
+                        <h2 class="large-title">Buy and Sell Crypto Easily</h2>
+                        <p class="text text-base">Start trading your favorite cryptocurrencies with low fees and a
+                            user-friendly interface.</p>
+                        <div class="action-selector">
+                            <label for="action">Choose an action:</label>
+                            <select id="action" class="input-control">
+                                <option value="buy">Buy</option>
+                                <option value="sell">Sell</option>
+                            </select>
+                        </div>
+                        <div class="crypto-input flex items-center justify-center">
+                            <input type="number" id="crypto-amount" class="input-control"
+                                placeholder="Enter Quds amount">
+                            <p class="text text-base">Equivalent ETH: <span id="eth-equivalent">0.00</span></p>
+                            <button id="confirm-action" class="btn">Confirm Action</button>
+                        </div>
+                        <div class="tradingview-chart">
+                            <div class="tradingview-widget-container">
+                                <div id="tradingview_chart"></div>
+                                <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+                                <script type="text/javascript">
+                                    new TradingView.widget({
+                                        "container_id": "tradingview_chart",
+                                        "symbol": "ETHUSDT",
+                                        "theme": "dark",
+                                        "style": "1",
+                                        "locale": "en",
+                                        "toolbar_bg": "#f1f3f6",
+                                        "enable_publishing": false,
+                                        "allow_symbol_change": true,
+                                        "autosize": true
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2024 Quds Coin. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            const conversionRate = 0.05; // Example conversion rate for Quds to ETH
+            $('#crypto-amount').on('input', function () {
+                const quds = parseFloat($(this).val()) || 0;
+                const eth = (quds * conversionRate).toFixed(4);
+                $('#eth-equivalent').text(eth);
+            });
+
+            $('#confirm-action').on('click', function () {
+                const action = $('#action').val();
+                const amount = $('#crypto-amount').val();
+                if (amount) {
+                    alert(`${action.charAt(0).toUpperCase() + action.slice(1)} action confirmed for ${amount} Quds.`);
+                } else {
+                    alert('Please enter an amount to proceed.');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,19 +1,25 @@
 const { ethers } = require("hardhat");
 
 async function main() {
-  // Define initial parameters for the contract
-  const initialSupply = ethers.parseEther("1000000"); 
-  const ownerAddress = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"; // MetaMask wallet address
-  // Get the contract factory
-  const PalestineDonationToken = await ethers.getContractFactory("PalestineDonationToken");
-  // Deploy the contract
-  const token = await PalestineDonationToken.deploy(initialSupply, ownerAddress);
-  console.log("PalestineDonationToken deployed to:", token.address);
+    // Load the contract factory
+    const PalestineDonationToken = await ethers.getContractFactory("PalestineDonationToken");
+
+    // Parameters for the constructor
+    const initialSupply = ethers.parseEther("1000000"); // 1 million tokens with 18 decimals
+    const palestineAddress = "0x90F79bf6EB2c4f870365E785982E1f101E93b906"; // Replace with a valid Ethereum address
+
+    console.log("Deploying PalestineDonationToken with initialSupply:", initialSupply.toString());
+
+    // Deploy the contract
+    const token = await PalestineDonationToken.deploy(initialSupply, palestineAddress);
+    //console.log(token);
+
+    // Log the contract address
+    console.log("PalestineDonationToken deployed to:", token.address);
 }
 
-main()
-  .then(() => process.exit(0))
-  .catch((error) => {
-    console.error(error);
-    process.exit(1);
-  });
+// Execute the script
+main().catch((error) => {
+    console.error("Error deploying the contract:", error);
+    process.exitCode = 1;
+});

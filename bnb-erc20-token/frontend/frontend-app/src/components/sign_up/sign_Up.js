@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DOMPurify from "dompurify";
+import ReCAPTCHA from "react-google-recaptcha";
 
 function Signup() {
+  const sitekey = process.env.REACT_APP_SITE_KEY;
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -10,47 +12,76 @@ function Signup() {
     phone: "",
     user_type: "Donor",
   });
-
-  const [responseMessage, setResponseMessage] = useState(""); 
+  const [captchaToken, setCaptchaToken] = useState(""); // To store reCAPTCHA token
+  const [responseMessage, setResponseMessage] = useState("");
   const navigate = useNavigate(); // React Router navigation function
 
+  // Sanitize user input
   const sanitizeInput = (value) => {
     return DOMPurify.sanitize(value);
   };
 
+  // Handle form input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: sanitizeInput(value) });
   };
 
+  // Handle reCAPTCHA token
+  const handleCaptchaChange = (token) => {
+    setCaptchaToken(token);
+  };
+
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-     try {
-      const response = await fetch("http://localhost:1234/api/v1/users/register", {
+    if (!captchaToken) {
+      setResponseMessage("Please complete the reCaptcha challenge");
+      return;
+    }
+
+    try {
+      // Register the user
+      const registerResponse = await fetch("http://localhost:1234/api/v1/users/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, captchaToken }),
         credentials: "include",
       });
-      console.log(response);
-      const result = await response.json();
-      
-  
-      if (response.ok) {
-        console.log("Registration successful:", result);
-        navigate("/dashboard");
+
+      const registerResult = await registerResponse.json();
+
+      if (registerResponse.ok) {
+        console.log("Registration successful:", registerResult);
+
+        // Send email for verification
+        const emailResponse = await fetch("http://localhost:1234/api/v1/email-verification", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email: "anonyyme64@gmail.com" }), // Send the email
+        });
+
+        const emailResult = await emailResponse.json();
+
+        if (emailResponse.ok) {
+          console.log("Email sent for verification:", emailResult);
+          setResponseMessage("Verification email sent! Please check your inbox.");
+          navigate("/dashboard"); // Redirect to email verification page
+        } else {
+          setResponseMessage(`Error sending email: ${emailResult.message || "Something went wrong!"}`);
+        }
       } else {
-        setResponseMessage(`Error: ${result.message || "Something went wrong!"}`);
+        setResponseMessage(`Error: ${registerResult.message || "Something went wrong during registration!"}`);
       }
     } catch (error) {
       setResponseMessage(`Error: ${error.message}`);
     }
   };
-  
-  
 
   return (
     <div className="signup-container">
@@ -123,6 +154,14 @@ function Signup() {
             <option value="Donor">Donor</option>
             <option value="Beneficiary">Beneficiary</option>
           </select>
+        </div>
+
+        <div>
+          <ReCAPTCHA
+            className="reCAPTCHA-class"
+            sitekey={sitekey}
+            onChange={handleCaptchaChange}
+          />
         </div>
 
         <button type="submit" className="signup-button">

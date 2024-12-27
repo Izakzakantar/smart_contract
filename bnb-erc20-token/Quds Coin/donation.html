@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Donation</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
+        rel="stylesheet">
+    <!-- Favicon -->
+    <link rel="icon" href="assets/images/1.png" type="image/x-icon">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="./dist/css/main.css" />
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.6.8/dist/ethers.umd.min.js"></script>
+    <style>
+        /* Basic styling for body and layout */
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        /* Styling for the main content */
+        main {
+            flex: 1;
+            position: relative;
+        }
+
+        /* Navigation bar styles */
+        .navbar {
+            background: #111;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .nav-list {
+            display: flex;
+            gap: 20px;
+        }
+
+        .navbar .nav-item {
+            list-style: none;
+        }
+
+        .navbar .nav-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .navbar .nav-link:hover {
+            color: #18c8ff;
+        }
+
+        /* Header margin adjustment */
+        .header+main {
+            margin-top: 60px;
+        }
+
+        /* Donation section styles */
+        .donation-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+            padding: 20px;
+        }
+
+        /* Input fields styling */
+        .donation-section .input-control {
+            margin-bottom: 15px;
+            width: 100%;
+            max-width: 300px;
+            padding: 10px;
+            border-radius: 10px;
+            border: 2px solid #933ffe;
+            background: transparent;
+            color: white;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .donation-section .input-control::placeholder {
+            color: #aaa;
+            font-style: italic;
+        }
+
+        /* Logo styling */
+        .donation-section img.logo {
+            margin: 5px auto;
+            width: 400px;
+            height: auto;
+        }
+
+        /* Button styling */
+        .donation-section .btn {
+            position: relative;
+            display: inline-block;
+            padding: 12px 24px;
+            font-size: 16px;
+            color: white;
+            border: none;
+            background: linear-gradient(145deg, #18c8ff, #933ffe);
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .donation-section .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Background animation for logos */
+        .background-logos {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .background-logos img {
+            position: absolute;
+            width: 100px;
+            height: auto;
+            opacity: 0.1;
+            animation: float 10s infinite ease-in-out;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        /* Footer styles */
+        .footer {
+            text-align: center;
+            padding: 20px 0;
+            background: #111;
+            color: #aaa;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-wrapper bg-dark">
+        <!-- Header Section -->
+        <header class="header">
+            <div class="navbar">
+                <!-- Branding -->
+                <a href="#" class="navbar-brand flex items-center">
+                    <img src="./assets/icons/site_icon.svg">
+                    <span class="brand-text">Quds Coin</span>
+                </a>
+                <!-- Navigation Links -->
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="crypto_pages.html" class="nav-link">Buy/Sell</a></li>
+                    <li class="nav-item"><a href="#contact" class="nav-link">Market</a></li>
+                    <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                    <li class="nav-item"><a href="#contact" class="nav-link">Support</a></li>
+                </ul>
+            </div>
+        </header>
+
+        <!-- Main Donation Section -->
+        <main>
+            <section id="donation" class="donation-section">
+                <!-- Background Logos -->
+                <div class="background-logos">
+                    <img src="./assets/icons/coin_logo.svg" style="top: 10%; left: 20%;">
+                    <img src="./assets/icons/coin_logo.svg" style="top: 40%; left: 70%;">
+                    <img src="./assets/icons/coin_logo.svg" style="top: 70%; left: 30%;">
+                    <img src="./assets/icons/coin_logo.svg" style="top: 20%; left: 80%;">
+                    <img src="./assets/icons/coin_logo.svg" style="top: 60%; left: 50%;">
+                </div>
+                <div class="container">
+                    <!-- Donation Section Content -->
+                    <h2 class="large-title">Support Us with Your Donation</h2>
+                    <p class="text text-base" style="margin-bottom: 20px;">
+                        Every contribution helps us grow and make a difference!
+                    </p>
+                    <!-- Form for Donation -->
+                    <form>
+                        <!-- Donation Amount Input -->
+                        <input type="text" id="donation-amount" class="input-control"
+                            placeholder="Enter amount in ETH or Quds">
+                        <!-- Wallet Address Input -->
+                        
+                        <!-- Donate Button -->
+                        <button type="submit" class="btn">Donate Now</button>
+                    </form>
+                    <!-- Logo -->
+                    <img src="./assets/images/Quds.png" alt="Coin Logo" class="logo">
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer Section -->
+        <footer class="footer">
+            <p>&copy; 2024 Quds Coin. All rights reserved.</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

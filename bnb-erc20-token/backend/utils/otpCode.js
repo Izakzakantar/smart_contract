@@ -1,0 +1,14 @@
+function generateNumericOTP() {
+    const digits = "0123456789";
+    const length=4
+    let otp = "";
+    for (let i = 0; i < length; i++) {
+      otp += digits[Math.floor(Math.random() * digits.length)];
+    }
+    return otp;
+  }
+  
+ 
+  //const otp = generateNumericOTP(4); 
+  //console.log("Your OTP is:", otp);
+module.exports={generateNumericOTP}
