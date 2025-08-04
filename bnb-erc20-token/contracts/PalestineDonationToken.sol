@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract PalestineDonationToken is ERC20, Ownable {
     address public palestineAddress;  // Address to receive donation commissions
-    uint256 public transactionCommission = 3;  // 2% commission in tokens
+    uint256 public transactionCommission = 4;  // 2% commission in tokens
 
     // List of beneficiaries
     mapping(address => bool) public beneficiaries;
