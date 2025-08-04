@@ -3,7 +3,7 @@ const jwt=require('../utils/jsonWebToken');
 const config=require("../../config.json")
 async function createUser(req, res) {
     try {
-        const { name, email, password, phone, user_type } = req.body;
+        const { name, email, password, phone } = req.body;
         const result = await userFunctions.registration(name, email, password, phone, user_type);
 
         if (result.status === 'error') {
