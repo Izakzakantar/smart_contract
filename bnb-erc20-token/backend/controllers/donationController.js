@@ -5,7 +5,7 @@ async function newDonation(req,res){
         const {firstName, donorAddress, amount, remark} =req.body
         //console.log(req.body);
         // Extract token from cookies or authorization header
-        const token = req.cookies.token || req.headers.authorization.split(" ")[1];
+        const token = req.cookies.tokenn || req.headers.authorization.split(" ")[1];
         console.log(token);
         if (!token) {
             return res.status(401).json({ message: "Unauthorized: No token provided" });
